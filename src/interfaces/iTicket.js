@@ -4,7 +4,7 @@ class iTicket {
         @return {promise<Ticket[]>}
         @throws {error} si hay un error en la obtención 
     */
-    static async getTicketInfo() { }
+    static async getTickets() { }
 }
 
 module.exports = iTicket
