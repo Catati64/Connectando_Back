@@ -1,12 +1,14 @@
 const Ticket = require('./../models/ticket')
 
 const tikectInfo = async (req, res) => {
-    const { departureCity, arrivalCity, departureDate, isRounded, returnDate, passangers, extraluggage } = req.body
+    const { departureCity, arrivalCity, returnDate, departureDate, isRounded, passangers, extraluggage } = req.body
 
     try {
-        const ticketInfo = await Ticket.getTickets(departureCity, arrivalCity, departureDate, returnDate, isRounded, passangers, extraluggage)
+        const ticketInfo = await Ticket.getTickets(departureCity, arrivalCity, departureDate, passangers, extraluggage)
+        //console.log(ticketInfo)
         if (isRounded) {
-            const ticketInfoReturn = await Ticket.getTickets(arrivalCity, departureCity, returnDate, departureDate, false, passangers, extraluggage)
+            const ticketInfoReturn = await Ticket.getTickets(arrivalCity, departureCity, returnDate, passangers, extraluggage)
+            //console.log(ticketInfoReturn)
             res.status(200).json({
                 ticketInfo,
                 ticketInfoReturn,

@@ -2,9 +2,9 @@
 const Trip = require('./../models/trip')
 
 const createTrip = async (req, res) => {
-    const { userId, departureCity, arrivalCity, departureDate, price, itinerary, departureLocation, arrivalLocation, seats} = req.body
+    const { userId, departureCity, arrivalCity, departureDate, price, itinerary, departureLocation, arrivalLocation, seats, extraluggage} = req.body
 
-    const newTrip = await Trip.createTrip(userId, departureCity, arrivalCity, departureDate, price, itinerary, departureLocation, arrivalLocation, seats)
+    const newTrip = await Trip.createTrip(userId, departureCity, arrivalCity, departureDate, price, itinerary, departureLocation, arrivalLocation, seats, extraluggage)
     if (!newTrip) {
         return res.status(402).json({ message: 'algo pasho' })
     } else {
