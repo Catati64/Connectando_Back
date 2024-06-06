@@ -115,13 +115,15 @@ class Buy {
             if (!ticket.exists) {
                 throw new Error('El boleto no existe');
             } else {
-                return { ticket: new Buy(ticket.data()), ticketId: ticket.id };
+                const { email, name, lastName, phone, departureSeat, returnSeat, passengers, paymentData, tripId, tripIdReturn, price } = ticket.data();
+                return { ticket: new Buy(email, name, lastName, phone, departureSeat, returnSeat, passengers, paymentData, tripId, tripIdReturn, price), ticketId: ticket.id };
             }
         } catch (error) {
             console.log('Error => ', error)
             throw new Error('Error al recuperar el boleto')
         }
     }
+    
     
 
 }

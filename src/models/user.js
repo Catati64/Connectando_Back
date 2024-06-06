@@ -5,7 +5,7 @@ const iUser = require('./../interfaces/iUser')
 const firestore = admin.firestore()
 
 class User extends iUser {
-    constructor(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono) {
+    constructor(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL) {
         super()
         this.email = email
         this.password = password
@@ -14,15 +14,16 @@ class User extends iUser {
         this.Amaterno = Amaterno
         this.Direccion = Direccion
         this.Telefono = Telefono
+        this.imgURL =  imgURL
     }
-    static async createUser(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono) {
+    static async createUser(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL) {
         try {
             const hash = await bcrypt.hash(password, 10)
             const user = firestore.collection('users').doc(email)
             await user.set({
-                email, password: hash, Nombre, Apaterno, Amaterno, Direccion, Telefono
+                email, password: hash, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL
             })
-            return new User(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono)
+            return new User(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL)
         } catch (error) {
             console.log('Error => ', error)
             throw new Error('error creating user')
@@ -39,7 +40,7 @@ class User extends iUser {
             const userDoc = await user.get()
             if (userDoc.exists) {
                 const userData = userDoc.data()
-                return new User(userData.email, userData.password, userData.Nombre, userData.Apaterno, userData.Amaterno, userData.Direccion, userData.Telefono)
+                return new User(userData.email, userData.password, userData.Nombre, userData.Apaterno, userData.Amaterno, userData.Direccion, userData.Telefono, userData.imgURL)
             }
         } catch (error) {
             console.log('Error => ', error)

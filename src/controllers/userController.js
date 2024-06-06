@@ -14,22 +14,26 @@ const loginUser = async (req, res) => {
         return res.status(401).json({ message: 'Contraseña invalida' })
     }
 
+    const imgURL = await  userDoc.imgURL
+
     const token = jwt.sign({ email: userDoc.email }, process.env.SECRET, { expiresIn: '1h' })
     res.status(200).json({
         message: 'Success',
-        token
+        token,
+        imgURL,
+        email: userDoc.email
     })
 }
 
 const registerUser = async (req, res) => {
-    const { email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono } = req.body
+    const { email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL} = req.body
 
     const existsUser = await User.findByEmail(email)
     if (existsUser) {
         return res.status(402).json({ message: 'El usuario ya existe' })
     }
 
-    const newUser = await User.createUser(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono)
+    const newUser = await User.createUser(email, password, Nombre, Apaterno, Amaterno, Direccion, Telefono, imgURL)
     if (!newUser) {
         return res.status(402).json({ message: 'algo pasho' })
     } else {
